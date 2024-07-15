@@ -31,6 +31,6 @@ public class Main {
             sb.append(map.get(each)).append(" ");
         }
 
-        System.out.println(sb.toString().trim());
+        System.out.print(sb.toString().trim());
     }
 }
