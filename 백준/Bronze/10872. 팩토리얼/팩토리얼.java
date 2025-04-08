@@ -7,11 +7,16 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         int n = Integer.parseInt(br.readLine());
-        int result = 1;
-        for (int i = 1; i <n+1 ; i++) {
-            result = result * i;
+        int solution = solution(n);
+        System.out.println(solution);
+
+    }
+
+    public static int solution(int n) {
+        if (n > 1) {
+            return n * solution(n - 1);
+        } else {
+            return 1;
         }
-        System.out.println(result);
-        br.close();
     }
 }
