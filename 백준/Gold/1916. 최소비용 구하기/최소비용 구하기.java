@@ -28,7 +28,7 @@ public class Main {
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
-            cost[u][v] = Math.min(cost[u][v], c);
+            cost[u][v] = Math.min(cost[u][v], c); // 같은 경로 버스 두개일경우 고려
         }
         st = new StringTokenizer(br.readLine());
         int A = Integer.parseInt(st.nextToken());
