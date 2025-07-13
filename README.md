@@ -99,6 +99,7 @@
 ### 🚀 Silver
 | 문제번호 | 링크 |
 | ----- | ----- |
+|1003. 피보나치 함수|[링크](./%EB%B0%B1%EC%A4%80/Silver/1003.%E2%80%85%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98%E2%80%85%ED%95%A8%EC%88%98/README.md)|
 |1018. 체스판 다시 칠하기|[링크](./%EB%B0%B1%EC%A4%80/Silver/1018.%E2%80%85%EC%B2%B4%EC%8A%A4%ED%8C%90%E2%80%85%EB%8B%A4%EC%8B%9C%E2%80%85%EC%B9%A0%ED%95%98%EA%B8%B0/README.md)|
 |1026. 보물|[링크](./%EB%B0%B1%EC%A4%80/Silver/1026.%E2%80%85%EB%B3%B4%EB%AC%BC/README.md)|
 |10546. 배부른 마라토너|[링크](./%EB%B0%B1%EC%A4%80/Silver/10546.%E2%80%85%EB%B0%B0%EB%B6%80%EB%A5%B8%E2%80%85%EB%A7%88%EB%9D%BC%ED%86%A0%EB%84%88/README.md)|
