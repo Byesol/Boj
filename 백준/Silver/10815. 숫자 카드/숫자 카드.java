@@ -8,6 +8,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
+
         int n = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
         int[] array = new int[n];
@@ -15,36 +16,34 @@ public class Main {
             array[i] = Integer.parseInt(st.nextToken());
         }
         Arrays.sort(array);
+
         int m = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
-        int first = 0;
-        int end = n - 1;
         for (int i = 0; i < m; i++) {
             int find = Integer.parseInt(st.nextToken());
-            int result = binarySearch(find, array, first, end);
-            sb.append(result+" ");
+            if (binarySearch(array, find)) {
+                sb.append("1 ");
+            } else {
+                sb.append("0 ");
+            }
         }
-        System.out.print(sb );
+        System.out.println(sb);
         br.close();
     }
 
-    public static int binarySearch(int find, int[] array, int first, int end) {
-
-        int mid = (first + end) / 2;
-        if (first > end) {
-
-            return 0;
+    private static boolean binarySearch(int[] array, int find) {
+        int left = 0;
+        int right = array.length - 1;
+        while (left <= right) {
+            int middle = (left + right) / 2;
+            if (array[middle] == find) {
+                return true;
+            } else if (array[middle] < find) {
+                left = middle + 1;
+            } else {
+                right = middle - 1;
+            }
         }
-        if (array[mid] == find) {
-            return 1;
-        }
-        if (array[mid] > find) {
-            return binarySearch(find, array, first, mid - 1);
-        }
-        if (array[mid] < find) {
-            return binarySearch(find, array, mid + 1, end);
-        }
-        return 0;
-
+        return false;
     }
 }
