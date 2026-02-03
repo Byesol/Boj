@@ -1,30 +1,33 @@
 import java.util.*;
-
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        List<Integer> answer = new ArrayList<>();
         
-        int baseDay = calc(progresses[0], speeds[0]);
-        int count = 1;
-
-        for (int i = 1; i < progresses.length; i++) {
-            int day = calc(progresses[i], speeds[i]);
-            
-            if (day <= baseDay) {
-                count++;
-            } else {
-                answer.add(count);
-                baseDay = day;
-                count = 1;
+        //[95, 90, 99, 99, 80, 99]	[1, 1, 1, 1, 1, 1]	[1, 3, 2]
+        // 5   10  x   x   1   1
+        //이전것보다 더 큰지를 검사
+        int exday = 0;
+        Deque<Integer> stack = new ArrayDeque<>();
+        for(int i=0; i< progresses.length;i++){
+            int remain = 100 - progresses[i];
+            int day = remain / speeds[i];
+            if(remain%speeds[i] !=0){
+                day++;
             }
+            if(exday<day){
+                stack.push(1);
+                exday = day;
+            }
+            else{
+                int count=  stack.pop();
+                count ++;
+                stack.push(count);
+            }
+            
         }
-
-        answer.add(count);
-        return answer.stream().mapToInt(i -> i).toArray();
-    }
-
-    private int calc(int progress, int speed) {
-        int remain = 100 - progress;
-        return (remain + speed - 1) / speed; // 올림
+        int[] answer = new int[stack.size()];
+        for (int i = answer.length - 1; i >= 0; i--) {
+            answer[i] = stack.pop();
+        }       
+        return answer;
     }
 }
