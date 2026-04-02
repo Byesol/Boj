@@ -1,70 +1,76 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Scanner;
 
 public class Main {
-    public static StringBuilder sb = new StringBuilder();
-    static List<Integer>[] graph;     // 바깥: 배열, 안쪽: ArrayList
-    static boolean[] visitedForDfs;
-    static boolean[] visitedForBfs;
+    static List<Integer>[] graph;
+    static boolean[] visited;
+    static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        int v = Integer.parseInt(st.nextToken());
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt(); // 정점 수
+        int M = sc.nextInt(); // 간선 수
+        int V = sc.nextInt(); // 시작 정점
 
-        // 1️⃣ 그래프 초기화 (바깥 배열, 안쪽 ArrayList)
-        graph = new ArrayList[n + 1];
-        for (int i = 1; i <= n; i++) graph[i] = new ArrayList<>();
-
-        // 2️⃣ 간선 입력
-        for (int i = 0; i < m; i++) {
-            st = new StringTokenizer(br.readLine());
-            int from = Integer.parseInt(st.nextToken());
-            int to = Integer.parseInt(st.nextToken());
-            graph[from].add(to);
-            graph[to].add(from);
+        // 그래프 초기화
+        graph = new ArrayList[N + 1];
+        for (int i = 1; i <= N; i++) {
+            graph[i] = new ArrayList<>();
         }
 
-        // 3️⃣ 탐색 순서를 위해 각 리스트 정렬
-        for (int i = 1; i <= n; i++) Collections.sort(graph[i]);
+        // 간선 입력 (양방향)
+        for (int i = 0; i < M; i++) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            graph[a].add(b);
+            graph[b].add(a);
+        }
 
-        visitedForDfs = new boolean[n + 1];
-        dfs(v);
+        // 정점 번호 오름차순 정렬 (작은 번호 먼저 방문)
+        for (int i = 1; i <= N; i++) {
+            Collections.sort(graph[i]);
+        }
+
+        // DFS
+        visited = new boolean[N + 1];
+        dfs(V);
         sb.append("\n");
 
-        visitedForBfs = new boolean[n + 1];
-        bfs(v);
+        // BFS
+        visited = new boolean[N + 1];
+        bfs(V);
 
         System.out.print(sb);
-        br.close();
     }
 
-    // 4️⃣ DFS
-    public static void dfs(int start) {
-        visitedForDfs[start] = true;
-        sb.append(start).append(" ");
-        for (int next : graph[start]) {
-            if (!visitedForDfs[next]) dfs(next);
+    static void dfs(int v) {
+        visited[v] = true;
+        sb.append(v).append(" ");
+
+        for (int next : graph[v]) {
+            if (!visited[next]) {
+                dfs(next);
+            }
         }
     }
 
-    // 5️⃣ BFS
-    public static void bfs(int start) {
+    static void bfs(int start) {
         Queue<Integer> queue = new LinkedList<>();
-        queue.add(start);
-        visitedForBfs[start] = true;
+        visited[start] = true;
+        queue.offer(start);
 
         while (!queue.isEmpty()) {
-            int now = queue.poll();
-            sb.append(now).append(" ");
-            for (int next : graph[now]) {
-                if (!visitedForBfs[next]) {
-                    visitedForBfs[next] = true;
-                    queue.add(next);
+            int v = queue.poll();
+            sb.append(v).append(" ");
+
+            for (int next : graph[v]) {
+                if (!visited[next]) {
+                    visited[next] = true;
+                    queue.offer(next);
                 }
             }
         }
