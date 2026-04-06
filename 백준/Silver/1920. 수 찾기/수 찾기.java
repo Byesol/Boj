@@ -8,41 +8,49 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
+
         int n = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
+
         int[] array = new int[n];
         for (int i = 0; i < n; i++) {
             array[i] = Integer.parseInt(st.nextToken());
         }
+
         Arrays.sort(array);
+
         int m = Integer.parseInt(br.readLine());
+
         st = new StringTokenizer(br.readLine());
+        // 3. n이 아니라 m번만큼 반복해야 합니다.
         for (int i = 0; i < m; i++) {
-            int x = Integer.parseInt(st.nextToken());
-            if (binarySearch(array, x)) {
-                sb.append(1).append('\n');
-            } else {
-                sb.append(0).append('\n');
-            }
+            int target = Integer.parseInt(st.nextToken());
+            // 탐색 결과를 StringBuilder에 저장
+            sb.append(find(array, target)).append("\n");
         }
-        System.out.print(sb);
-
+        
+        // 최종 결과 출력
+        System.out.println(sb);
     }
-
-    private static boolean binarySearch(int[] array, int target) {
+    // 4. 이진 탐색 로직 완성 (반복문 방식)
+    static int find(int[] sortedArray, int target) {
         int left = 0;
-        int right = array.length - 1;
+        int right = sortedArray.length - 1;
 
         while (left <= right) {
-            int middle = (left + right) / 2;
-            if (array[middle] == target) {
-                return true;
-            } else if (array[middle] < target) {
-                left = middle + 1;
-            } else {
-                right = middle - 1;
+            int mid = left + (right - left) / 2; // 중간 인덱스 계산 (오버플로우 방지)
+
+            if (sortedArray[mid] == target) {
+                return 1; // 찾았을 경우 1 반환
+            } 
+            else if (sortedArray[mid] > target) {
+                right = mid - 1; 
+            } 
+            else {
+                left = mid + 1;  
             }
         }
-        return false;
+
+        return 0; // 끝까지 못 찾았을 경우 0 반환
     }
 }
