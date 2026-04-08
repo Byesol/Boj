@@ -1,21 +1,24 @@
 class Solution {
-    int answer = 0; // 전역 변수로 경우의 수 저장
+    int answer = 0;
+    int[] numbers;
+    int target;
 
     public int solution(int[] numbers, int target) {
-        dfs(numbers, target, 0, 0);
+        this.numbers= numbers;
+        this.target = target;
+        dfs(0,  0);
         return answer;
     }
-
-    // index: 현재 인덱스, sum: 현재까지의 합
-    private void dfs(int[] numbers, int target, int index, int sum) {
-        // 종료 조건
-        if (index == numbers.length) {
-            if (sum == target) answer++;
+    private void dfs(int depth, int calc) {
+        if (depth == numbers.length) {
+            if (calc == target) {
+                answer++;
+            }
+            
             return;
+        } else {
+            dfs(depth + 1, calc + numbers[depth]);
+            dfs( depth + 1,  calc - numbers[depth]);
         }
-
-        // 선택지 2개: + / -
-        dfs(numbers, target, index + 1, sum + numbers[index]);
-        dfs(numbers, target, index + 1, sum - numbers[index]);
     }
 }
